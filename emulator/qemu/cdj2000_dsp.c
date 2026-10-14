@@ -62,7 +62,7 @@
 #include "system/address-spaces.h"
 #include "system/memory.h"
 #include "hw/core/cpu.h"
-#include "accel/tcg/cpu-loop.h"
+#include "exec/cpu-common.h"
 
 #include "cdj2000_dsp.h"
 

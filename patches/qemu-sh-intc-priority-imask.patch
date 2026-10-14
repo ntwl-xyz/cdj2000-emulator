@@ -57,12 +57,10 @@ index 0da82f9..5ddfe2d 100644
      memory_region_init_io(&desc->iomem, NULL, &sh_intc_ops, desc, "intc",
 --- a/hw/intc/trace-events
 +++ b/hw/intc/trace-events
-@@ -337,6 +337,7 @@
- sh_intc_read(unsigned size, uint64_t offset, unsigned long val) "size %u 0x%" PRIx64 " -> 0x%lx"
+@@ -315,2 +315,3 @@
  sh_intc_write(unsigned size, uint64_t offset, unsigned long val) "size %u 0x%" PRIx64 " <- 0x%lx"
  sh_intc_set(int id, int enable) "setting interrupt group %d to %d"
 +sh_intc_prio(int id, unsigned int level) "interrupt source %d priority level %u"
- # hex-l2vic.c
  hex_l2vic_reg_write(unsigned int addr, uint32_t value) "addr: 0x%03x value: 0x%08"PRIx32
  hex_l2vic_reg_read(unsigned int addr, uint32_t value) "addr: 0x%03x value: 0x%08"PRIx32
 diff --git a/include/hw/sh4/sh_intc.h b/include/hw/sh4/sh_intc.h

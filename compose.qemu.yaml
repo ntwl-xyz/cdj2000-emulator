@@ -1,0 +1,39 @@
+services:
+  qemu-builder:
+    image: cdj2000-qemu-builder:local
+    build:
+      context: .
+      dockerfile: container/qemu.Containerfile
+    volumes:
+      - .:/src:ro
+      - qemu-source:/work/qemu-src
+      - ./build/qemu-export:/out
+
+  qemu-runtime:
+    image: cdj2000-qemu-builder:local
+    working_dir: /src
+    network_mode: host
+    entrypoint: ["/out/qemu-system-sh4-run"]
+    volumes:
+      - .:/src:ro
+      - ./build/qemu-export:/out:ro
+
+  nxs-emulator:
+    image: cdj2000-qemu-builder:local
+    working_dir: /src
+    network_mode: host
+    user: "1000:1000"
+    environment:
+      DISPLAY: "${DISPLAY}"
+      XAUTHORITY: /tmp/.Xauthority
+      HOME: /tmp
+      XDG_CACHE_HOME: /tmp/.cache
+    entrypoint: ["/src/container/run-nxs.sh"]
+    volumes:
+      - .:/src:ro
+      - ./build/qemu-export:/out:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - /run/user/1000/xauth_cMMYIx:/tmp/.Xauthority:ro
+
+volumes:
+  qemu-source:
